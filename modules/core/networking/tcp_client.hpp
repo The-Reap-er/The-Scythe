@@ -97,10 +97,10 @@ namespace TheScythe
                 return -1;
             }
 
-            send(client_fd, msg, strlen(msg), 0);
+            /*send(client_fd, msg, strlen(msg), 0);
             valread = read(client_fd, buffer, 1024);
-            close(client_fd);
-            return buffer[1024];
+            close(client_fd);*/
+            return client_fd;
         };
 
         char Socket::tcp_connect_ipv6(const char *ipv6, suint port, char *msg) {
@@ -132,11 +132,11 @@ namespace TheScythe
                 return EXIT_FAILURE;
             }
 
-            send(client_fd, msg, strlen(msg), 0);
+            /*send(client_fd, msg, strlen(msg), 0);
             valread = read(client_fd, buffer, 1024);
             std::cout << buffer;
-            close(client_fd);
-            return buffer[1024];
+            close(client_fd);*/
+            return client_fd;
         };
 
 
