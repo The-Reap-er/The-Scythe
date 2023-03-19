@@ -8,6 +8,8 @@
 #include "../../The-Scythe.hpp"
 
 #if defined(INFO_OS_WINDOWS)
+#pragma comment (lib, "Ws2_32.lib")
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <arpa/inet.h>
@@ -36,8 +38,10 @@ namespace TheScythe
             /// DNS domain lookup (using IPv4)
             static std::string dnsLookup4(const std::string &domain);
             /// Tcp Connect
-            static char tcp_connect_ipv4(const char * ip, suint port, char * msg);
-            static char tcp_connect_ipv6(const char * ipv6, suint port, char * msg);
+            static char linux_tcp_connect_ipv4(const char * ip, suint port, char * msg);
+            static char linux_tcp_connect_ipv6(const char * ipv6, suint port, char * msg);
+            static char windows_tcp_connect_ipv4(const char * ip, suint port, char * msg);
+            //static char linux_tcp_connect_ipv6(const char * ipv6, suint port, char * msg);
 
 
 
@@ -60,6 +64,38 @@ namespace TheScythe
             const static int Error = -1;
 #endif
         };
+
+        /// edit later on windows
+#ifdef INFO_OS_WINDOWS
+        char Socket::windows_tcp_connect_ipv4(const char *ip, suint port, char *msg) {
+            WSAData wsaData;
+            WORD DllVersion = MAKEWORD(2, 1);
+            if (WSAStartup(DllVersion, &wsaData) != 0) {
+                cout << "Winsock Connection Failed!" << endl;
+                exit(1);
+            }
+
+            string getInput = "";
+            SOCKADDR_IN addr;
+            int addrLen = sizeof(addr);
+            IN_ADDR ipvalue;
+            addr.sin_addr.s_addr = inet_addr("HOSTIPGOESHERE");
+            addr.sin_port = htons(80);
+            addr.sin_family = AF_INET;
+
+            SOCKET connection = socket(AF_INET, SOCK_STREAM, NULL);
+            if (connect(connection, (SOCKADDR*)&addr, addrLen) == 0) {
+                cout << "Connected!" << endl;
+                getline(cin, getInput);
+                exit(0);
+            }
+            else {
+                cout << "Error Connecting to Host" << endl;
+                exit(1);
+            }
+            return 0;
+        };
+#endif
         std::string Socket::dnsLookup4(const std::string &domain)
         {
 
@@ -77,7 +113,7 @@ namespace TheScythe
             );
         };
 
-        char Socket::tcp_connect_ipv4(const char * ip, suint port, char * msg) {
+        char Socket::linux_tcp_connect_ipv4(const char * ip, suint port, char * msg) {
             int status, client_fd, valread;
             struct sockaddr_in serv_addr;
             char buffer[1024] = { 0 };
@@ -103,7 +139,7 @@ namespace TheScythe
             return client_fd;
         };
 
-        char Socket::tcp_connect_ipv6(const char *ipv6, suint port, char *msg) {
+        char Socket::linux_tcp_connect_ipv6(const char *ipv6, suint port, char *msg) {
 
             int status, client_fd, valread;
             struct sockaddr_in6 server_addr;
@@ -137,7 +173,8 @@ namespace TheScythe
             std::cout << buffer;
             close(client_fd);*/
             return client_fd;
-        };
+        }
+
 
 
     }
