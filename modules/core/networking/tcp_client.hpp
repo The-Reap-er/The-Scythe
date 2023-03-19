@@ -96,6 +96,7 @@ namespace TheScythe
                 std::string err = "\nConnection Failed \n";
                 return -1;
             }
+
             send(client_fd, msg, strlen(msg), 0);
             valread = read(client_fd, buffer, 1024);
             close(client_fd);
