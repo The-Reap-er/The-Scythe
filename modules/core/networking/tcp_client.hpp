@@ -8,11 +8,10 @@
 #include "../../The-Scythe.hpp"
 
 #if defined(INFO_OS_WINDOWS)
-#pragma comment (lib, "Ws2_32.lib")
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <winsock2.h>
 #include <ws2tcpip.h>
-#include <arpa/inet.h>
+#pragma comment (lib, "Ws2_32.lib")
 #else
 #include <string>
 #include <cstring>
@@ -67,35 +66,37 @@ namespace TheScythe
 
         /// edit later on windows
 #ifdef INFO_OS_WINDOWS
+/*
         char Socket::windows_tcp_connect_ipv4(const char *ip, suint port, char *msg) {
             WSAData wsaData;
             WORD DllVersion = MAKEWORD(2, 1);
             if (WSAStartup(DllVersion, &wsaData) != 0) {
-                cout << "Winsock Connection Failed!" << endl;
+                std::cout << "Winsock Connection Failed!" << std::endl;
                 exit(1);
             }
 
-            string getInput = "";
+            std::string getInput = "";
             SOCKADDR_IN addr;
             int addrLen = sizeof(addr);
             IN_ADDR ipvalue;
-            addr.sin_addr.s_addr = inet_addr("HOSTIPGOESHERE");
+            addr.sin_addr.s_addr = inet_addr("127.0.0.1");
             addr.sin_port = htons(80);
             addr.sin_family = AF_INET;
 
             SOCKET connection = socket(AF_INET, SOCK_STREAM, NULL);
             if (connect(connection, (SOCKADDR*)&addr, addrLen) == 0) {
-                cout << "Connected!" << endl;
-                getline(cin, getInput);
+                std::cout << "Connected!" << std::endl;
+                getline(std::cin, getInput);
                 exit(0);
             }
             else {
-                cout << "Error Connecting to Host" << endl;
+                std::cout << "Error Connecting to Host" << std::endl;
                 exit(1);
             }
             return 0;
         };
-#endif
+        */
+#else
         std::string Socket::dnsLookup4(const std::string &domain)
         {
 
@@ -174,7 +175,7 @@ namespace TheScythe
             close(client_fd);*/
             return client_fd;
         }
-
+#endif
 
 
     }

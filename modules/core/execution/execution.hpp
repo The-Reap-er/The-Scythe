@@ -3,6 +3,7 @@
 //
 
 #include "../../The-Scythe.hpp"
+#include <array>
 
 #ifndef THESCYTHE_EXECUTION_HPP
 #define THESCYTHE_EXECUTION_HPP
