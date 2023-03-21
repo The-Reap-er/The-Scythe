@@ -9,6 +9,10 @@
 /// DO NOT NEED TO WRITE #include<windows.h> INSIDE YOUR SOURCE CODE, it may cause redefinition errors
 	#define WIN32_LEAN_AND_MEAN
 	#include <windows.h>
+    #include <iostream>
+    #include <string>
+    #include <array>
+    #include <memory>
 #elif defined(INFO_OS_LINUX)
 #include <sys/mman.h>
 #include <sys/types.h>

