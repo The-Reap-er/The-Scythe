@@ -3,7 +3,7 @@
 //
 #include "modules/The-Scythe.hpp"
 #include "modules/core/networking/tcp_client.hpp"
-
+#include "modules/utils/ui/banner.hpp"
 
 /*
  *  ToDo {
@@ -12,6 +12,7 @@
  *  Windows Tcp v6 Connect
  *  Windows Reverse Tcp v4
  *  Windows Reverse Tcp v6
+ *  ui: page
  *  }
  *
  *  Functions i made
@@ -29,7 +30,7 @@
  *  TheScythe::Core::Socket::linux_tcp_connect_ipv6(ipv6, 7002, "hi");
  *  TheScythe::Core::Socket::linux_tcp_connect_ipv4(ipv4, 7002, "hi");
  *  TheScythe::Core::Malware::linux_reverse_tcp6("::1", port);
- *  TheScythe::Core::Malware::linux_reverse_tcp4("::1", port);
+ *  TheScythe::Core::Malware::linux_reverse_tcp4("127.0.0.1", port);
  *  }
  *
  *  Windows {
@@ -43,7 +44,8 @@
 
 int main()
 {
-    TheScythe::Core::Socket::windows_tcp_connect_ipv4("127.0.0.1",9002,NULL);
+
+    TheScythe::Utils::Banner::banner();
 
 
 }
