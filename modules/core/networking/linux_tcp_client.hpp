@@ -2,38 +2,14 @@
 // Created by grimreaper on 3/18/23.
 //
 
-#ifndef THESCYTHE_TCP_CLIENT_HPP
-#define THESCYTHE_TCP_CLIENT_HPP
-
-#include "../../The-Scythe.hpp"
-
-#if defined(INFO_OS_WINDOWS)
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
-#pragma comment (lib, "Ws2_32.lib")
-#include <iostream>
-#include <string.h>
-#include <sstream>
-#include <WinSock2.h>
-#include <WS2tcpip.h>
-
-#else
-#include <string>
-#include <cstring>
-#include <stdint.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <sys/types.h>
-#include <unistd.h>
-#endif
-
-
+#ifndef THESCYTHE_LINUX_TCP_CLIENT_HPP
+#define THESCYTHE_LINUX_TCP_CLIENT_HPP
+#include "networking_includes.hpp"
 namespace TheScythe
 {
     namespace Core
     {
-        class Socket
+        class linux_Socket
                 {
         protected:
 
@@ -43,67 +19,18 @@ namespace TheScythe
             /// Tcp Connect
             static char linux_tcp_connect_ipv4(const char * ip, suint port, char * msg);
             static char linux_tcp_connect_ipv6(const char * ipv6, suint port, char * msg);
-            static char windows_tcp_connect_ipv4(const char * ip, suint port, char * msg);
-            //static char linux_tcp_connect_ipv6(const char * ipv6, suint port, char * msg);
-
-
-
-
-#ifdef INFO_OS_WINDOWS
-            typedef SOCKET Handle;
-            typedef int Size;
-#else
             typedef int Handle;
             typedef socklen_t Size;
-#endif
-
             typedef struct sockaddr_in Address;
-
-#ifdef INFO_OS_WINDOWS
-            const static Handle Invalid = INVALID_SOCKET;
-            const static int Error = SOCKET_ERROR;
-#else
             const static Handle Invalid = -1;
             const static int Error = -1;
-#endif
         };
 
 
         /// edit later on windows
-#ifdef INFO_OS_WINDOWS
 
-        char Socket::windows_tcp_connect_ipv4(const char *ip, suint port, char *msg) {
-                WSAData wsaData;
-                WORD DllVersion = MAKEWORD(2, 1);
-                if (WSAStartup(DllVersion, &wsaData) != 0) {
-                    std::cout << "Winsock Connection Failed!" << std::endl;
-                    exit(1);
-                }
 
-                std::string getInput = "";
-                SOCKADDR_IN addr;
-                int addrLen = sizeof(addr);
-                IN_ADDR ipvalue;
-                addr.sin_addr.s_addr = inet_addr(ip);
-                addr.sin_port = htons(port);
-                addr.sin_family = AF_INET;
-
-                SOCKET connection = socket(AF_INET, SOCK_STREAM, NULL);
-                if (connect(connection, (SOCKADDR*)&addr, addrLen) == 0) {
-                    std::cout << "Connected!" << std::endl;
-                    getline(std::cin, getInput);
-                    exit(0);
-                }
-                else {
-                    std::cout << "Error Connecting to Host" << std::endl;
-                    exit(1);
-                }
-                return 0;
-
-        }
-
-#else
-        std::string Socket::dnsLookup4(const std::string &domain)
+        std::string linux_Socket::dnsLookup4(const std::string &domain)
         {
 
             hostent *m_hostent;
@@ -120,12 +47,12 @@ namespace TheScythe
             );
         };
 
-        char Socket::linux_tcp_connect_ipv4(const char * ip, suint port, char * msg) {
+        char linux_Socket::linux_tcp_connect_ipv4(const char * ip, suint port, char * msg) {
             int status, client_fd, valread;
             struct sockaddr_in serv_addr;
             char buffer[1024] = { 0 };
             if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
-                std::string err = "\n Socket creation Fucking Failed ! \n";
+                std::string err = "\n linux_Socket creation Fucking Failed ! \n";
                 return -1;
             }
             serv_addr.sin_family = AF_INET;
@@ -146,14 +73,14 @@ namespace TheScythe
             return client_fd;
         };
 
-        char Socket::linux_tcp_connect_ipv6(const char *ipv6, suint port, char *msg) {
+        char linux_Socket::linux_tcp_connect_ipv6(const char *ipv6, suint port, char *msg) {
 
             int status, client_fd, valread;
             struct sockaddr_in6 server_addr;
             int ret;
             char buffer[1024] = { 0 };
             if ((client_fd = socket(AF_INET6, SOCK_STREAM, IPPROTO_TCP)) < 0) {
-                std::string err = "\n Socket creation Fucking Failed ! \n";
+                std::string err = "\n linux_Socket creation Fucking Failed ! \n";
                 return -1;
             }
             server_addr.sin6_family = AF_INET6;
@@ -181,10 +108,9 @@ namespace TheScythe
             close(client_fd);*/
             return client_fd;
         }
-#endif
 
 
     }
 }
 
-#endif //THESCYTHE_TCP_CLIENT_HPP
+#endif //THESCYTHE_LINUX_TCP_CLIENT_HPP
