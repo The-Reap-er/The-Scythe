@@ -48,6 +48,6 @@ int main()
 {
 
     TheScythe::Utils::Banner::banner();
-    TheScythe::Utils::Menu::display_server_menu();
+    TheScythe::Core::Server::listener();
 
 }
