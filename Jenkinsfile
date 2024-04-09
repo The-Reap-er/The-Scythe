@@ -1,9 +1,14 @@
 pipeline {
     agent any
     stages {
-            stage ('blah') {
-        echo get_current_time_date()
-          }
+        stage('ls') {
+            steps {
+                sh 'ls'
+                echo get_current_time_date()
+            }
+        }
+       
     }
 }
-   
+
+
