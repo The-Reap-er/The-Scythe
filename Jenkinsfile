@@ -4,7 +4,6 @@ pipeline {
         stage('ls') {
             steps {
                 sh 'ls'
-                echo get_current_time_date()
             }
         }
        
