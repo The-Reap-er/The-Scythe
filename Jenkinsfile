@@ -6,7 +6,6 @@ pipeline {
                 sh 'ls'
             }
         }
-        stages {
         stage('Semgrep Scan') {
             steps {
                 // Run Semgrep scan
