@@ -24,6 +24,15 @@ pipeline {
                 sh 'cat grype-results.json'
             }
         }
+        stage('Trivy Scan') {
+            steps {
+                // Run Trivy scan
+                sh 'trivy fs .'
+
+                // Display the scan results
+                //sh 'cat trivy-results.json'
+            }
+        }
         stage('GitLeaks Scan') {
             steps {
                 // Run GitLeaks scan
