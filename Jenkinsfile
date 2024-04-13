@@ -18,6 +18,7 @@ pipeline {
                 stage('Grype/Syft Scan') {
             steps {
                 // Run Grype scan
+                sh 'syft ubuntu'
                 sh 'grype ubuntu -o json > grype-results.json'
                 // Display the scan results
                 sh 'cat grype-results.json'
