@@ -17,7 +17,7 @@ pipeline {
         stage('GitLeaks Scan') {
             steps {
                 // Run GitLeaks scan
-                sh 'gitleaks --path . --report=gitleaks-results.json'
+                sh 'gitleaks detect --source . -r gitleaks-results.json'
 
                 // Display the scan results
                 sh 'cat gitleaks-results.json'
