@@ -6,6 +6,16 @@ pipeline {
                 sh 'ls'
             }
         }
+        stages {
+        stage('Semgrep Scan') {
+            steps {
+                // Run Semgrep scan
+                sh 'semgrep scan . --json > semgrep-results.json'
+
+                // Display the scan results
+                sh 'cat semgrep-results.json'
+            }
+        }
                 stage('Grype/Syft Scan') {
             steps {
                 // Run Grype scan
