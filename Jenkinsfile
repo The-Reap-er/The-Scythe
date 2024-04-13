@@ -32,6 +32,17 @@ pipeline {
                 sh 'cat gitleaks-results.json'
             }
         }
+        stage('Cleanup') {
+            steps {
+                // Remove the scan results files
+                sh 'rm semgrep-results.json'
+                sh 'rm grype-results.json'
+                //sh 'rm syft-results.json'
+                sh 'rm gitleaks-results.json'
+                //sh 'rm trivy-results.json'
+                //sh 'rm kics-results.json'
+            }
+        }
 
        
     }
